@@ -134,6 +134,9 @@ namespace zubarev
       is >> del_t{{':'}, last};
       std::string field;
       is >> field;
+      if (field == ")") {
+        break;
+      }
       if (field == "key1") {
         is >> key1;
         has1 = true;
@@ -168,7 +171,7 @@ namespace zubarev
   }
   bool operator<(const DataStruct& lhs, const DataStruct& rhs)
   {
-    if (lhs.key1 < lhs.key1) {
+    if (lhs.key1 < rhs.key1) {
       return true;
     }
     if (rhs.key1 < lhs.key1) {
