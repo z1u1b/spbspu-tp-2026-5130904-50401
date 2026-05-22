@@ -215,7 +215,7 @@ namespace zubarev
 
   std::istream& operator>>(std::istream& is, zubarev::delimeter_t del)
   {
-    del.last = check(is, del.expected);
+    del.last = zubarev::check(is, del.expected);
     return is;
   }
 }
