@@ -129,14 +129,12 @@ namespace zubarev
     SllLit key2;
     std::string key3;
     bool has1 = false, has2 = false, has3 = false;
-    while (is) {
-
+    while (is && is.peek() != ')') {
       is >> del_t{{':'}, last};
+
       std::string field;
       is >> field;
-      if (field == ")") {
-        break;
-      }
+
       if (field == "key1") {
         is >> key1;
         has1 = true;
@@ -150,6 +148,8 @@ namespace zubarev
         is.setstate(std::ios::failbit);
       }
     }
+
+    is >> del_t{{')'}, last};
 
     if (is && has1 && has2 && has3) {
       ds.key1 = key1;
@@ -190,13 +190,17 @@ namespace zubarev
   {
     char c = 0;
     is >> c;
+
+    bool found = false;
     for (auto it = expected.begin(); it != expected.end(); ++it) {
-      if (c != *it) {
-        is.setstate(std::ios_base::failbit);
+      if (c == *it) {
+        found = true;
         break;
       }
     }
-
+    if (!found) {
+      is.setstate(std::ios_base::failbit);
+    }
     return c;
   }
 
