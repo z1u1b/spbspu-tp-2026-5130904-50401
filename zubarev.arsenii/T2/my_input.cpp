@@ -10,27 +10,14 @@ namespace zubarev
     if (!s) {
       return is;
     }
-    IOGuard g(is);
-    using del_t = zubarev::delimeter_t;
-    char last = 0;
 
-    double mantissa = 0.0;
-    char sign = 0;
-    int power = 0;
+    double value = 0.0;
+    is >> value;
 
-    is >> mantissa;
-    is >> del_t{{'E', 'e'}, last};
-    is >> del_t{{'+', '-'}, last};
     if (is) {
-      sign = last;
+      db.d = value;
     }
-    is >> power;
-    if (is) {
-      if (sign == '-') {
-        power = -power;
-      }
-      db.d = mantissa * std::pow(10, power);
-    }
+
     return is;
   }
 
@@ -67,6 +54,7 @@ namespace zubarev
     os << power;
     return os;
   }
+
   bool operator<(const DblSci& lhs, const DblSci& rhs)
   {
     return lhs.d < rhs.d;
@@ -114,26 +102,128 @@ namespace zubarev
     return lhs.s == rhs.s;
   }
 
+  // std::istream& operator>>(std::istream& is, DataStruct& ds)
+  // {
+  //   std::istream::sentry s(is);
+  //   if (!s) {
+  //     return is;
+  //   }
+  //   IOGuard g(is);
+  //   using del_t = zubarev::delimeter_t;
+  //   char last = 0;
+  //   is >> del_t{{'('}, last};
+
+  //   DblSci key1;
+  //   SllLit key2;
+  //   std::string key3;
+  //   bool has1 = false, has2 = false, has3 = false;
+  //   while (is && is.peek() != ')') {
+  //     is >> del_t{{':'}, last};
+
+  //     std::string field;
+  //     is >> field;
+
+  //     if (field == "key1") {
+  //       is >> key1;
+  //       has1 = true;
+  //     } else if (field == "key2") {
+  //       is >> key2;
+  //       has2 = true;
+  //     } else if (field == "key3") {
+  //       is >> std::quoted(key3);
+  //       has3 = true;
+  //     } else {
+  //       is.setstate(std::ios::failbit);
+  //     }
+  //   }
+
+  //   is >> del_t{{')'}, last};
+
+  //   if (is && has1 && has2 && has3) {
+  //     ds.key1 = key1;
+  //     ds.key2 = key2;
+  //     ds.key3 = key3;
+  //   } else {
+  //     is.setstate(std::ios::failbit);
+  //   }
+  //   return is;
+  // }
+  //   std::istream& operator>>(std::istream& is, DataStruct& ds)
+  // {
+  //   std::istream::sentry s(is);
+  //   if (!s) return is;
+  //   IOGuard g(is);
+  //   using del_t = zubarev::delimeter_t;
+  //   char last = 0;
+
+  //   is >> del_t{{'('}, last};
+  //   is >> del_t{{':'}, last};
+
+  //   DblSci key1;
+  //   SllLit key2;
+  //   std::string key3;
+  //   bool has1 = false, has2 = false, has3 = false;
+
+  //   for (int i = 0; i < 3; ++i) {
+  //     std::string field;
+  //     is >> field;
+  //     if (field == "key1") {
+  //       is >> key1;
+  //       has1 = true;
+  //     } else if (field == "key2") {
+  //       is >> key2;
+  //       has2 = true;
+  //     } else if (field == "key3") {
+  //       is >> std::quoted(key3);
+  //       has3 = true;
+  //     } else {
+  //       is.setstate(std::ios::failbit);
+  //     }
+
+  //     is >> del_t{{':'}, last};
+  //   }
+
+  //   is >> del_t{{')'}, last};
+
+  //   if (is && has1 && has2 && has3) {
+  //     ds.key1 = key1;
+  //     ds.key2 = key2;
+  //     ds.key3 = key3;
+  //   } else {
+  //     is.setstate(std::ios::failbit);
+  //   }
+  //   return is;
+  // }
   std::istream& operator>>(std::istream& is, DataStruct& ds)
   {
     std::istream::sentry s(is);
     if (!s) {
       return is;
     }
+
     IOGuard g(is);
     using del_t = zubarev::delimeter_t;
+
     char last = 0;
-    is >> del_t{{'('}, last};
 
     DblSci key1;
     SllLit key2;
     std::string key3;
-    bool has1 = false, has2 = false, has3 = false;
-    while (is && is.peek() != ')') {
-      is >> del_t{{':'}, last};
 
+    bool has1 = false;
+    bool has2 = false;
+    bool has3 = false;
+
+    is >> del_t{{'('}, last};
+    is >> del_t{{':'}, last};
+
+    while (is && is.peek() != ')') {
       std::string field;
       is >> field;
+
+      if (!is) {
+        return is;
+      }
 
       if (field == "key1") {
         is >> key1;
@@ -146,18 +236,23 @@ namespace zubarev
         has3 = true;
       } else {
         is.setstate(std::ios::failbit);
+        return is;
       }
+
+      is >> del_t{{':'}, last};
     }
 
     is >> del_t{{')'}, last};
 
-    if (is && has1 && has2 && has3) {
-      ds.key1 = key1;
-      ds.key2 = key2;
-      ds.key3 = key3;
-    } else {
+    if (!is || !has1 || !has2 || !has3) {
       is.setstate(std::ios::failbit);
+      return is;
     }
+
+    ds.key1 = key1;
+    ds.key2 = key2;
+    ds.key3 = key3;
+
     return is;
   }
   std::ostream& operator<<(std::ostream& os, const DataStruct& ds)
@@ -177,10 +272,10 @@ namespace zubarev
     if (rhs.key1 < lhs.key1) {
       return false;
     }
-    if (rhs.key2 < lhs.key2) {
+    if (lhs.key2 < rhs.key2) {
       return true;
     }
-    if (lhs.key2 < rhs.key2) {
+    if (rhs.key2 < lhs.key2) {
       return false;
     }
     return lhs.key3 < rhs.key3;
