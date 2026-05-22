@@ -20,35 +20,6 @@ namespace zubarev
 
     return is;
   }
-  // std::istream& operator>>(std::istream& is, DblSci& db)
-  // {
-  //   std::istream::sentry s(is);
-  //   if (!s) {
-  //     return is;
-  //   }
-  //   IOGuard g(is);
-  //   using del_t = zubarev::delimeter_t;
-  //   char last = 0;
-
-  //   double mantissa = 0.0;
-  //   char sign = 0;
-  //   int power = 0;
-
-  //   is >> mantissa;
-  //   is >> del_t{{'E', 'e'}, last};
-  //   is >> del_t{{'+', '-'}, last};
-  //   if (is) {
-  //     sign = last;
-  //   }
-  //   is >> power;
-  //   if (is) {
-  //     if (sign == '-') {
-  //       power = -power;
-  //     }
-  //     db.d = mantissa * std::pow(10, power);
-  //   }
-  //   return is;
-  // }
 
   std::ostream& operator<<(std::ostream& os, const DblSci& db)
   {
