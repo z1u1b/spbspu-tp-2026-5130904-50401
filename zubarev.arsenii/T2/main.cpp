@@ -1,18 +1,26 @@
 #include "my_input.hpp"
 #include <algorithm>
+#include <iomanip>
 #include <iostream>
 #include <iterator>
+#include <limits>
+#include <string>
 #include <vector>
 
 int main()
 {
   using T = zubarev::DataStruct;
   std::vector< T > data;
-
   using iit_t = std::istream_iterator< T >;
+  while (!std::cin.eof()) {
+    std::copy(iit_t{std::cin}, iit_t{}, std::back_inserter(data));
+    if (std::cin.fail()) {
+      std::cin.clear(std::cin.rdstate() & ~std::ios::failbit);
 
-  iit_t it(std::cin);
-  std::copy(it, iit_t{}, std::back_inserter(data));
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
+
   std::sort(data.begin(), data.end());
 
   using oit_t = std::ostream_iterator< T >;
