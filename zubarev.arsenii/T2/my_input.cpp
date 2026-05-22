@@ -1,5 +1,6 @@
 #include "my_input.hpp"
 #include <iomanip>
+#include <cmath>
 namespace zubarev
 {
   // std::istream& zubarev::operator>>(std::istream& is, p_t& p)
