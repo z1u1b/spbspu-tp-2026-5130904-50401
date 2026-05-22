@@ -122,6 +122,6 @@ namespace zubarev
   };
   std::istream& operator>>(std::istream& is, delimeter_t del);
 
-  char check(std::istream& is, std::vector< char >& expected);
+  char check(std::istream& is, const std::vector< char >& expected);
 
 }
