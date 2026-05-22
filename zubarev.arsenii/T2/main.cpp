@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <vector>
 #include <limits>
+#include <vector>
 
 int main()
 {
@@ -12,11 +12,9 @@ int main()
 
   using iit_t = std::istream_iterator< T >;
 
-  while (!std::cin.eof())
-  {
-    std::copy(iit_t {std::cin}, iit_t {}, std::back_inserter(data));
-    if (std::cin.fail())
-    {
+  while (!std::cin.eof()) {
+    std::copy(iit_t{std::cin}, iit_t{}, std::back_inserter(data));
+    if (std::cin.fail()) {
       std::cin.clear(std::cin.rdstate() & ~std::ios::failbit);
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

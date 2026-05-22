@@ -1,25 +1,9 @@
 #include "my_input.hpp"
-#include <iomanip>
 #include <cmath>
+#include <iomanip>
 namespace zubarev
 {
-  // std::istream& zubarev::operator>>(std::istream& is, p_t& p)
-  // {
-  //   std::istream::sentry s(is);
-  //   if (!s) {
-  //     return is;
-  //   }
-  //   IOGuard g(is);
-  //   using del_t = delimeter_t;
-  //   char last = 0;
-  //   int x = 0, y = 0;
-  //   is >> del_t{'(', last} >> x >> del_t{',', last} >> y >> del_t{')', last};
 
-  //   if (is) {
-  //     p = p_t{x, y};
-  //   }
-  //   return is;
-  // }
   std::istream& operator>>(std::istream& is, DblSci& db)
   {
     std::istream::sentry s(is);
@@ -184,19 +168,19 @@ namespace zubarev
   }
   bool operator<(const DataStruct& lhs, const DataStruct& rhs)
   {
-    if (lhs.key1<lhs.key1) {
+    if (lhs.key1 < lhs.key1) {
       return true;
     }
-    if (rhs.key1<lhs.key1) {
+    if (rhs.key1 < lhs.key1) {
       return false;
     }
-    if (rhs.key2<lhs.key2) {
+    if (rhs.key2 < lhs.key2) {
       return true;
     }
-    if (lhs.key2<rhs.key2) {
+    if (lhs.key2 < rhs.key2) {
       return false;
     }
-    return lhs.key3<rhs.key3;
+    return lhs.key3 < rhs.key3;
   }
 
   char check(std::istream& is, const std::vector< char >& expected)
