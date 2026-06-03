@@ -14,8 +14,6 @@ int main()
   using f_t = std::function< void(data_t&) >;
   std::map< std::string, cf_t > cmds;
   cmds["c1"] = g;
-  // cmds["c4"]=f;
   std::map< std::string, f_t > cmds;
   cmds["c2"] = f;
-  // cmds["c3"]=g;
 }
