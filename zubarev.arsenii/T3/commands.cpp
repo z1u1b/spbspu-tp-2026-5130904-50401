@@ -1,4 +1,5 @@
 #include "commands.hpp"
+#include "poly_functors.hpp"
 #include <iostream>
 namespace zubarev
 {
@@ -19,7 +20,9 @@ namespace zubarev
       }
     }
     if (isdigit(parameter[0])) {
-
+      size_t vert = std::stoi(parameter);
+      std::vector< Polygon > tmp;
+      std::copy_if(polygons.begin(), polygons.end(), std::back_inserter(tmp), FilterByVert{vert});
     } else if (parameter == "EVEN") {
 
     } else if (parameter == "ODD") {

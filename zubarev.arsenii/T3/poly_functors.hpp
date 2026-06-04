@@ -14,6 +14,11 @@ namespace zubarev
     size_t i = 0;
     double operator()(const Point&);
   };
+  struct FilterByVert
+  {
+    size_t count_vert = 0;
+    bool operator()(const Polygon&);
+  };
 
 }
 
