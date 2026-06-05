@@ -1,5 +1,5 @@
 #include "structs.hpp"
-
+#include <sstream>
 namespace zubarev
 {
   std::istream& operator>>(std::istream& is, Point& p)
@@ -11,11 +11,11 @@ namespace zubarev
     IOGuard g(is);
     int x = 0, y = 0;
     char last = 0;
-    is >> delimeter_t{'{', last};
+    is >> delimeter_t{'(', last};
     is >> x;
     is >> delimeter_t{';', last};
     is >> y;
-    is >> delimeter_t{'}', last};
+    is >> delimeter_t{')', last};
     if (is) {
       p.x = x;
       p.y = y;
@@ -28,7 +28,7 @@ namespace zubarev
     if (!s) {
       return os;
     }
-    return os << '{' << p.x << ';' << p.y << '}';
+    return os << '(' << p.x << ';' << p.y << ')';
   }
   bool operator==(const Point& lhs, const Point& rhs)
   {
@@ -43,16 +43,24 @@ namespace zubarev
     }
     IOGuard g(is);
 
-    size_t count = 0;
-    is >> count;
-    if (is) {
-      std::vector< Point > tmp;
-      tmp.reserve(count);
+    std::string line;
+    if (std::getline(is, line)) {
+      p.points.clear(); // Сбрасываем старый мусор
+      if (line.empty()) {
+        return is;
+      }
 
-      std::copy_n(std::istream_iterator< Point >(is), count, std::back_inserter(tmp));
+      std::stringstream ss(line);
+      size_t count = 0;
 
-      if (is) {
-        p.points = std::move(tmp);
+      if (ss >> count) {
+        std::vector< Point > tmp;
+        std::copy(std::istream_iterator< Point >(ss), std::istream_iterator< Point >(), std::back_inserter(tmp));
+
+        std::string dummy;
+        if (tmp.size() == count && !(ss >> dummy)) {
+          p.points = std::move(tmp);
+        }
       }
     }
     return is;
