@@ -5,19 +5,29 @@ namespace zubarev
 {
   struct AreaCount
   {
-    double operator()(const Polygon&);
+    double operator()(const Polygon&) const;
   };
 
   struct AreaTriangleCount
   {
-    std::vector< Point > points;
+    const std::vector< Point >& points;
     size_t i = 0;
     double operator()(const Point&);
   };
-  struct FilterByVert
+  struct FilterByCountVert
   {
     size_t count_vert = 0;
-    bool operator()(const Polygon&);
+    bool operator()(const Polygon&) const;
+  };
+  struct FilterByOddVert
+  {
+    // size_t count_vert = 0;
+    bool operator()(const Polygon&) const;
+  };
+  struct FilterByEvenVert
+  {
+    // size_t count_vert = 0;
+    bool operator()(const Polygon&) const;
   };
 
 }

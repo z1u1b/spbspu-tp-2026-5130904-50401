@@ -2,7 +2,7 @@
 #define STRUCTS_HPP
 
 #include <vector>
-
+#include <iostream>
 namespace zubarev
 {
   struct Point
@@ -10,13 +10,13 @@ namespace zubarev
     int x, y;
   };
   std::istream& operator>>(std::istream& is, Point& p);
-  std::istream& operator<<(std::ostream& os, const Point& p);
+  std::ostream& operator<<(std::ostream& os, const Point& p);
   struct Polygon
   {
     std::vector< Point > points;
   };
   std::istream& operator>>(std::istream& is, Polygon& p);
-  std::istream& operator<<(std::ostream& os, const Polygon& p);
+  std::ostream& operator<<(std::ostream& os, const Polygon& p);
 
   struct IOGuard
   {
