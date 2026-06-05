@@ -40,6 +40,25 @@ namespace zubarev
     size_t count = 0;
     size_t operator()(const Polygon&);
   };
+  struct FilterBySame
+  {
+    const Polygon& ex_pol;
+    bool operator()(const Polygon&);
+  };
+  struct NormalizePoint
+  {
+    const Point& base;
+    Point operator()(const Point&);
+  };
+  struct NormalizePol
+  {
+    Polygon operator()(const Polygon&);
+  };
+  struct Overlay
+  {
+    const Polygon& in_pol;
+    bool operator()(const Polygon&);
+  };
 
 }
 

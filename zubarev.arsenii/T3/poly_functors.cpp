@@ -1,6 +1,5 @@
 #include "poly_functors.hpp"
 #include <algorithm>
-#include <iostream>
 #include <numeric>
 #include <cmath>
 namespace zubarev
@@ -45,5 +44,36 @@ namespace zubarev
     }
     return count;
   }
+
+  Polygon NormalizePol::operator()(const Polygon& pol)
+  {
+    Point base = pol.points[0];
+    Polygon p_new;
+    std::transform(pol.points.begin(), pol.points.end(), std::back_inserter(p_new.points), NormalizePoint{base});
+    return p_new;
+  }
+  Point NormalizePoint::operator()(const Point& pt)
+  {
+    return Point{pt.x - base.x, pt.y - base.y};
+  }
+  bool Overlay::operator()(const Polygon& pol)
+  {
+    Polygon A;
+    Polygon B;
+
+    std::transform(pol.points.begin(), pol.points.end(), std::back_inserter(A.points), NormalizePol{});
+    std::transform(in_pol.points.begin(), in_pol.points.end(), std::back_inserter(B.points), NormalizePol{});
+
+    Polygon BB;
+    BB.points.reserve(B.points.size() * 2);
+    BB.points.insert(BB.points.end(), B.points.begin(), B.points.end());
+    BB.points.insert(BB.points.end(), B.points.begin(), B.points.end());
+
+    return std::search(BB.points.begin(), BB.points.end(), A.points.begin(), A.points.end()) != BB.points.end();
+  }
+  // bool FilterBySame::operator()(const Polygon& pol)
+  // {
+  //   const Point& base = ex_pol.points[0];
+  // }
 
 }

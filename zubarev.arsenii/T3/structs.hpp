@@ -11,6 +11,7 @@ namespace zubarev
   };
   std::istream& operator>>(std::istream& is, Point& p);
   std::ostream& operator<<(std::ostream& os, const Point& p);
+  bool operator==(const Point& lhs, const Point& rhs);
   struct Polygon
   {
     std::vector< Point > points;

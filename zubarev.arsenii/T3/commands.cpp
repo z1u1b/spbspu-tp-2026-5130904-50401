@@ -4,6 +4,7 @@
 #include <numeric>
 #include <string>
 #include <cctype>
+#include <iomanip>
 
 #include "poly_functors.hpp"
 
@@ -145,10 +146,16 @@ namespace zubarev
     is >> p;
     validate_stream(is);
 
-    vector< size_t > arr_max;
-    std::transform(polygons.begin(), polygons.end(), back_inserter(arr_max), CountMax{p, 0});
+    std::vector< size_t > arr_max;
+    std::transform(polygons.begin(), polygons.end(), std::back_inserter(arr_max), CountMax{p, 0});
     os << *std::max_element(arr_max.begin(), arr_max.end()) << '\n';
   }
   void same(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
-  {}
+  {
+    Polygon p;
+    is >> p;
+    validate_stream(is);
+
+    os << std::count_if(polygons.begin(), polygons.end(), Overlay{p}) << '\n';
+  }
 }
