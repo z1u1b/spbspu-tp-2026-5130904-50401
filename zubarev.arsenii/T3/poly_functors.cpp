@@ -58,11 +58,9 @@ namespace zubarev
   }
   bool Overlay::operator()(const Polygon& pol)
   {
-    Polygon A;
-    Polygon B;
 
-    std::transform(pol.points.begin(), pol.points.end(), std::back_inserter(A.points), NormalizePol{});
-    std::transform(in_pol.points.begin(), in_pol.points.end(), std::back_inserter(B.points), NormalizePol{});
+    Polygon A = NormalizePol{}(pol);
+    Polygon B = NormalizePol{}(in_pol);
 
     Polygon BB;
     BB.points.reserve(B.points.size() * 2);
