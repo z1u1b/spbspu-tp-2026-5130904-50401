@@ -34,7 +34,10 @@ namespace zubarev
   {
     return !(pol.points.size() % 2);
   }
-
+  size_t CountVert::operator()(const Polygon& pol) const
+  {
+    return pol.points.size();
+  }
   size_t CountMax::operator()(const Polygon& pol)
   {
     if (ex_pol.points == pol.points) {

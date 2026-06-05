@@ -1,8 +1,10 @@
 #include "input.hpp"
 #include "commands.hpp"
+#include "poly_functors.hpp"
 #include <map>
 namespace zubarev
 {
+  std::vector< zubarev::Polygon >* zubarev::command::polygons = nullptr;
   std::istream& operator>>(std::istream& is, command&)
   {
     using cmd_t = void (*)(std::istream&, std::ostream&, const std::vector< zubarev::Polygon >&);
@@ -30,6 +32,10 @@ namespace zubarev
     }
     return is;
   }
-  void input(std::istream& is, std::vector< zubarev::Polygon >& polygons)
-  {}
+
+  void input(std::istream& is, std::vector< Polygon >& all_polygons)
+  {
+    std::vector< Polygon > temp_polygons((std::istream_iterator< Polygon >(is)), std::istream_iterator< Polygon >());
+    std::copy_if(temp_polygons.begin(), temp_polygons.end(), std::back_inserter(all_polygons), FilterByCountVert{3});
+  }
 }
