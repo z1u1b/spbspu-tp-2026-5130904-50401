@@ -7,6 +7,7 @@
 namespace zubarev
 {
   double areaSum(const std::vector< Polygon >& polys);
+  void validate_stream(std::istream& is);
   void area(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons);
   void max(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons);
   void min(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons);
