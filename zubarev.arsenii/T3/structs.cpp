@@ -1,5 +1,7 @@
 #include "structs.hpp"
 #include <sstream>
+#include <iterator>
+#include <algorithm>
 namespace zubarev
 {
   std::istream& operator>>(std::istream& is, Point& p)

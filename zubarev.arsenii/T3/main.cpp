@@ -1,6 +1,8 @@
 #include <iostream>
 #include "input.hpp"
 #include <fstream>
+#include <iterator>
+#include <algorithm>
 
 int main(int argc, char** argv)
 {

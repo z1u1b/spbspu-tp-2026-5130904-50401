@@ -2,6 +2,9 @@
 #include "commands.hpp"
 #include "poly_functors.hpp"
 #include <map>
+#include <iterator>
+#include <limits>
+#include <algorithm>
 namespace zubarev
 {
   std::vector< zubarev::Polygon >* zubarev::command::polygons = nullptr;
