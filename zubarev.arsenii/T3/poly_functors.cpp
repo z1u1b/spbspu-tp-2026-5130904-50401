@@ -72,7 +72,7 @@ namespace zubarev
 
     return std::search(BB.points.begin(), BB.points.end(), A.points.begin(), A.points.end()) != BB.points.end();
   }
-  bool False::operator()()
+  bool False::operator()(const command&)
   {
     return false;
   }

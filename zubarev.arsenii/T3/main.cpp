@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iterator>
 #include <algorithm>
-
+#include "poly_functors.hpp"
 int main(int argc, char** argv)
 {
   if (argc != 2) {
@@ -22,5 +22,5 @@ int main(int argc, char** argv)
 
   static_cast< void >(std::find_if(std::istream_iterator< zubarev::command >(std::cin),
                                    std::istream_iterator< zubarev::command >(),
-                                   [](const zubarev::command&) { return false; }));
+                                   zubarev::False{}));
 }

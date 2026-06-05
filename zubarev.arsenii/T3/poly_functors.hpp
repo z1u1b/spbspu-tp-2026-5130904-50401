@@ -1,6 +1,8 @@
 #ifndef POLY_FUNCTORS_HPP
 #define POLY_FUNCTORS_HPP
 #include "structs.hpp"
+#include "input.hpp"
+
 namespace zubarev
 {
   struct AreaCount
@@ -59,7 +61,7 @@ namespace zubarev
   };
   struct False
   {
-    bool operator()();
+    bool operator()(const command&);
   };
   struct IsPolygon
   {
