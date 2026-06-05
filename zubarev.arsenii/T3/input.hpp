@@ -6,7 +6,7 @@ namespace zubarev
 
   struct command
   {
-    std::vector< zubarev::Polygon >* polygons;
+    static std::vector< zubarev::Polygon >* polygons;
     command() = default;
   };
   std::istream& operator>>(std::istream&, command&);
