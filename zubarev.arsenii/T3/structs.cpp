@@ -47,7 +47,7 @@ namespace zubarev
 
     std::string line;
     if (std::getline(is, line)) {
-      p.points.clear(); // Сбрасываем старый мусор
+      p.points.clear();
       if (line.empty()) {
         return is;
       }
@@ -62,9 +62,11 @@ namespace zubarev
         std::string dummy;
         if (tmp.size() == count && !(ss >> dummy)) {
           p.points = std::move(tmp);
+          return is;
         }
       }
     }
+    is.setstate(std::ios_base::failbit);
     return is;
   }
   std::ostream& operator<<(std::ostream& os, const Polygon& p)
