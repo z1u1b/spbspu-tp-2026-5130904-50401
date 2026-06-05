@@ -18,7 +18,7 @@ namespace zubarev
     commands["MIN"] = &zubarev::min;
     commands["COUNT"] = &zubarev::count;
     commands["MAXSEQ"] = &zubarev::maxseq;
-    commands["INFRAME"] = &zubarev::same;
+    commands["SAME"] = &zubarev::same;
 
     std::string cmd;
     is >> cmd;
@@ -39,6 +39,6 @@ namespace zubarev
   void input(std::istream& is, std::vector< Polygon >& all_polygons)
   {
     std::vector< Polygon > temp_polygons((std::istream_iterator< Polygon >(is)), std::istream_iterator< Polygon >());
-    std::copy_if(temp_polygons.begin(), temp_polygons.end(), std::back_inserter(all_polygons), FilterByCountVert{3});
+    std::copy_if(temp_polygons.begin(), temp_polygons.end(), std::back_inserter(all_polygons), IsPolygon{});
   }
 }

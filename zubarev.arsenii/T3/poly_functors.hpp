@@ -57,6 +57,14 @@ namespace zubarev
     const Polygon& in_pol;
     bool operator()(const Polygon&);
   };
+  struct False
+  {
+    bool operator()();
+  };
+  struct IsPolygon
+  {
+    bool operator()(const Polygon&);
+  };
 
 }
 

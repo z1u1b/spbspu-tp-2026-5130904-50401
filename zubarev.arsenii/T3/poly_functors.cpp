@@ -72,5 +72,13 @@ namespace zubarev
 
     return std::search(BB.points.begin(), BB.points.end(), A.points.begin(), A.points.end()) != BB.points.end();
   }
+  bool False::operator()()
+  {
+    return false;
+  }
+  bool IsPolygon::operator()(const Polygon& pol)
+  {
+    return pol.points.size() >= 3;
+  }
 
 }

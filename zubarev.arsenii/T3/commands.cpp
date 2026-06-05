@@ -145,7 +145,9 @@ namespace zubarev
     Polygon p;
     is >> p;
     validate_stream(is);
-
+    if (p.points.size() < 3) {
+      throw std::runtime_error("<INVALID COMMAND>");
+    }
     std::vector< size_t > arr_max;
     std::transform(polygons.begin(), polygons.end(), std::back_inserter(arr_max), CountMax{p, 0});
     os << *std::max_element(arr_max.begin(), arr_max.end()) << '\n';
@@ -155,7 +157,9 @@ namespace zubarev
     Polygon p;
     is >> p;
     validate_stream(is);
-
+    if (p.points.size() < 3) {
+      throw std::runtime_error("<INVALID COMMAND>");
+    }
     os << std::count_if(polygons.begin(), polygons.end(), Overlay{p}) << '\n';
   }
 }
