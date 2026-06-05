@@ -71,9 +71,5 @@ namespace zubarev
 
     return std::search(BB.points.begin(), BB.points.end(), A.points.begin(), A.points.end()) != BB.points.end();
   }
-  // bool FilterBySame::operator()(const Polygon& pol)
-  // {
-  //   const Point& base = ex_pol.points[0];
-  // }
 
 }

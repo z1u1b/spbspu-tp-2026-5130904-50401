@@ -3,7 +3,6 @@
 #include "structs.hpp"
 #include <vector>
 #include <iostream>
-// #include <iomanip>
 namespace zubarev
 {
   double areaSum(const std::vector< Polygon >& polys);

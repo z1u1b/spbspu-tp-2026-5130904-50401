@@ -21,12 +21,10 @@ namespace zubarev
   };
   struct FilterByOddVert
   {
-    // size_t count_vert = 0;
     bool operator()(const Polygon&) const;
   };
   struct FilterByEvenVert
   {
-    // size_t count_vert = 0;
     bool operator()(const Polygon&) const;
   };
 
