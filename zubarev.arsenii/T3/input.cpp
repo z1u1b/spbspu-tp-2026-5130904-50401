@@ -5,6 +5,7 @@
 #include <iterator>
 #include <limits>
 #include <algorithm>
+#include <sstream>
 namespace zubarev
 {
   std::vector< zubarev::Polygon >* zubarev::command::polygons = nullptr;
@@ -25,20 +26,46 @@ namespace zubarev
     if (!is) {
       return is;
     }
-
+    std::string rest_of_line;
+    std::getline(is, rest_of_line);
+    std::stringstream ss(rest_of_line);
     try {
-      commands.at(cmd)(is, std::cout, *command::polygons);
+      commands.at(cmd)(ss, std::cout, *command::polygons);
+      std::string extra;
+      if (ss >> extra) {
+        throw std::runtime_error("<INVALID COMMAND>");
+      }
     } catch (...) {
       std::cout << "<INVALID COMMAND>\n";
-      auto toignore = std::numeric_limits< std::streamsize >::max();
-      std::cin.ignore(toignore, '\n');
+      // auto toignore = std::numeric_limits< std::streamsize >::max();
+      // std::cin.ignore(toignore, '\n');
     }
     return is;
   }
 
-  void input(std::istream& is, std::vector< Polygon >& all_polygons)
+  // void input(std::istream& is, std::vector< Polygon >& all_polygons)
+  // {
+  //   std::vector< Polygon > temp_polygons((std::istream_iterator< Polygon >(is)), std::istream_iterator< Polygon >());
+  //   std::copy_if(temp_polygons.begin(), temp_polygons.end(), std::back_inserter(all_polygons), IsPolygon{});
+  // }
+
+  void input(std::istream& is, std::vector< zubarev::Polygon >& all_polygons)
   {
-    std::vector< Polygon > temp_polygons((std::istream_iterator< Polygon >(is)), std::istream_iterator< Polygon >());
-    std::copy_if(temp_polygons.begin(), temp_polygons.end(), std::back_inserter(all_polygons), IsPolygon{});
+    std::string line;
+
+    if (!std::getline(is, line)) {
+      return;
+    }
+
+    std::stringstream ss(line);
+    Polygon p;
+
+    std::string extra;
+    if (ss >> p && !(ss >> extra)) {
+      if (IsPolygon{}(p)) {
+        all_polygons.push_back(p);
+      }
+    }
+    input(is, all_polygons);
   }
 }
