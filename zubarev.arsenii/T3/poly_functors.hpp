@@ -30,6 +30,12 @@ namespace zubarev
     bool operator()(const Polygon&) const;
   };
 
+  struct CountVert
+  {
+
+    size_t operator()(const Polygon&) const;
+  };
+
 }
 
 #endif

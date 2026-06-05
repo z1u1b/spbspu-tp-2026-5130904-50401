@@ -1,11 +1,12 @@
 #include "commands.hpp"
-#include "poly_functors.hpp"
 
-#include <iostream>
 #include <algorithm>
 #include <numeric>
-#include <iomanip>
 #include <string>
+#include <cctype>
+
+#include "poly_functors.hpp"
+
 namespace zubarev
 {
   double areaSum(const std::vector< Polygon >& polys)
@@ -62,11 +63,36 @@ namespace zubarev
     }
   }
   void max(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
-  {}
-  void min(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
-  {}
-  void count(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
-  {}
-  void maxseq(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
-  {}
+  {
+    if (polygons.size() < 1) {
+      throw std::runtime_error("<INVALID COMMAND>");
+    }
+
+    std::string parameter = "";
+    is >> parameter;
+    if (!is) {
+      if (is.eof()) {
+        is.clear();
+        is.setstate(std::ios_base::eofbit);
+      } else {
+        is.clear();
+      }
+      throw std::runtime_error("<INVALID COMMAND>");
+    }
+    if (parameter == "VERTEXES") {
+      std::vector< size_t > count_vert;
+      std::transform(polygons.begin(), polygons.end(), std::back_inserter(count_vert), CountVert{});
+      os << *std::max_element(count_vert.begin(), count_vert.end()) << '\n';
+    } else if (parameter == "AREA") {
+      std::vector< double > areas;
+      std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), AreaCount{});
+      os << std::fixed << std::setprecision(1) << *std::max_element(areas.begin(), areas.end()) << '\n';
+    }
+  }
+  // void min(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
+  // {}
+  // void count(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
+  // {}
+  // void maxseq(std::istream& is, std::ostream& os, const std::vector< Polygon >& polygons)
+  // {}
 }
