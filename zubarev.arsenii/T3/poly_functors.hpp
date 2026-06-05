@@ -32,8 +32,13 @@ namespace zubarev
 
   struct CountVert
   {
-
     size_t operator()(const Polygon&) const;
+  };
+  struct CountMax
+  {
+    const Polygon& ex_pol;
+    size_t count = 0;
+    size_t operator()(const Polygon&);
   };
 
 }

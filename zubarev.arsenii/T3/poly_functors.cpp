@@ -35,4 +35,15 @@ namespace zubarev
   {
     return !(pol.points.size() % 2);
   }
+
+  size_t CountMax::operator()(const Polygon& pol)
+  {
+    if (ex_pol.points == pol.points) {
+      count += 1;
+    } else {
+      count = 0;
+    }
+    return count;
+  }
+
 }
